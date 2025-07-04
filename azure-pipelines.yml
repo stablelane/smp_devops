@@ -28,3 +28,15 @@ steps:
     buildContext: '.'
     arguments: |
       --build-arg PORT=$(port)
+
+- script: |
+    if [ $? -eq 0 ]; then
+      MSG="✅ Docker build succeeded!"
+    else
+      MSG="❌ Docker build failed! $?"
+    fi
+    curl -X POST "https://onepane.webhook.office.com/webhookb2/02bd097b-6930-4a48-96a3-14e77b47853b@2c16bffc-c55a-4fbd-98ad-4f3f8eb55c79/IncomingWebhook/9697628e117942f4acab5e4c2a05750e/afdea850-affd-460c-85cd-7332a3a012ab/V2oSY6V-OcmVYZ8h507avEB-txIFm56S_5atNHZrYBLR81" \
+      -H "Content-Type: application/json" \
+      -d "{\"text\": \"$MSG\"}"
+  displayName: 'Notify build result via webhook'
+  condition: always()
