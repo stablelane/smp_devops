@@ -39,7 +39,8 @@ steps:
       BRANCH=$(Build.SourceBranchName)
       PREFIX=$([ "$BRANCH" = "main" ] && echo "main" || echo "dev")
       DATE=$(date +'%Y.%m.%d')
-      TAG="${PREFIX}.${DATE}.0"
+      TIME=$(date +'%H%M%S')
+      TAG="${PREFIX}.${DATE}.${TIME}"
       echo "##vso[task.setvariable variable=tagName]$TAG"
       echo "Using tag: $TAG"
     displayName: 'Set simple calendar version tagName'
